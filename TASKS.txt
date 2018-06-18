@@ -1,0 +1,37 @@
+I. CREATE DROPLET
+
+II. LOGIN VIA SSH (https://bitfumes.com/blog/server/allow-login-with-ssh-key-only)
+	@ADD darbo PCC SSH
+	@ADD Mac book Pro SSH
+
+III. ADD USER and restrict root login (https://bitfumes.com/blog/server/allow-login-with-ssh-key-only)
+
+IV. LOGIN USER VIA SSH
+	@ADD darbo PCC SSH
+	@ADD Mac book Pro SSH
+
+V. INSTALL LEMP (php 7.2)
+
+CONFIGURE NGINX and PHP (for laravel)
+
+
+
+CONNECT SERVER and GIT via SSH
+	@Create SSH key for github on server
+	@Add .pub to GIT
+
+
+
+
+INSTAL COMPOSER
+
+
+CREATE SWAP FILE
+
+GIT REPO in SERVER FOR HOOKS
+Set up hooks
+
+
+DEPLOY laravel:
+	1. from GIT repositoru
+	2. from local PC

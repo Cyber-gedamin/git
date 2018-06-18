@@ -1,3 +1,6 @@
+https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/
+https://bitfumes.com/blog/server/logging-into-digital-ocean-droplet-ssh
+
 **********************************
 **********************************
 I. CREATE DROPLET in DigitalOcian
@@ -9,58 +12,58 @@ I. CREATE DROPLET in DigitalOcian
 II. LOGIN via SSH (form you pc to DigitalOcian)
 	**********************************
 	1.	Create SSH keys (public and private) on PC
-	ssh-keygen -t rsa -b 4096 -C 'server' (server is anyIdentifyer)
-	-	This will create two file in your .ssh folder. One is id_server and another is id_server.pub
-	-	Now we have to copy this id_server.pub content, so to do that we can write this command
-	-	copy path and change if I have such file, example:
-	o	/Users/butfumes/.ssh/id_rsa CHANGE TO /Users/butfumes/.ssh/id_server
-	-	Enter passphrase (empty for passphrase) - not need if you only one who is using this pc, so press ENTER
-	-	SSH key is created in your PC.
+		ssh-keygen -t rsa -b 4096 -C 'server' (server is anyIdentifyer)
+		-	This will create two file in your .ssh folder. One is id_server and another is id_server.pub
+		-	Now we have to copy this id_server.pub content, so to do that we can write this command
+		-	copy path and change if I have such file, example:
+		o	/Users/butfumes/.ssh/id_rsa CHANGE TO /Users/butfumes/.ssh/id_server
+		-	Enter passphrase (empty for passphrase) - not need if you only one who is using this pc, so press ENTER
+		-	SSH key is created in your PC.
 
 	**********************************
 	2.	Copy id_server.pub key and PASTE INTO SERVER (.ssh/authorized_key)
-	-	COPY to clipboard created ssh id_server.pub key
-	Cat id_server.pub | pbcopy
-	-	This 'cat' command open this file and 'pbcopy' command will copy its content to your clipboard.
-	On server, we will go to .ssh folder and open authorized_keys file with vim
+		-	COPY to clipboard created ssh id_server.pub key
+		Cat id_server.pub | pbcopy
+		-	This 'cat' command open this file and 'pbcopy' command will copy its content to your clipboard.
+		On server, we will go to .ssh folder and open authorized_keys file with vim
 			~/.ssh # vim authorized_keys
-	-	Press “I” in order to INSERT info in opened file
-	-	PASTE that ssh key we have copied in this authorized_keys file, then press ESC and colon (:) + w +q
+		-	Press “I” in order to INSERT info in opened file
+		-	PASTE that ssh key we have copied in this authorized_keys file, then press ESC and colon (:) + w +q
 
 	**********************************
 	3.	Now able to connect to server without password (ssh -i ~/.ssh/id_server root@server_IP)
-	TRY to login to SERVER via SSH by using this command:
-	ssh -i ~/.ssh/id_server root@server_IP  
-	EXAMPLE:  ssh -i ~/.ssh/id_server root@178.62.46.36
+		TRY to login to SERVER via SSH by using this command:
+		ssh -i ~/.ssh/id_server root@server_IP  
+		EXAMPLE:  ssh -i ~/.ssh/id_server root@178.62.46.36
 
-	Now we have to restrict login from root user
-	4.	CREATE NEW USER
-	1.	Create new user (add his password, details):
-	adduser bitfumes
-	2.	switch to new user
-	sudo su bitfumes  - But this user does't have any admin privilege, can’t run any sudo commands SO it will not be possible
-	3.	Switch BACK to root user
-	Exit 
-	usermod -aG admin bitfumes
-	sudo su bitfumes 
-	sudo su root – now you should able to run sudo commands
-	cd home
-	cd gedamin
+		Now we have to restrict login from root user
+		4.	CREATE NEW USER
+		1.	Create new user (add his password, details):
+		adduser bitfumes
+		2.	switch to new user
+		sudo su bitfumes  - But this user does't have any admin privilege, can’t run any sudo commands SO it will not be possible
+		3.	Switch BACK to root user
+		Exit 
+		usermod -aG admin bitfumes
+		sudo su bitfumes 
+		sudo su root – now you should able to run sudo commands
+		cd home
+		cd gedamin
 
 	**********************************
 	4.	Allow bitfumes user to login to server via ssh
-			   sudo su bitfumes 
-	(root@test:/home/gedamin#)
-	so go to gedamin directory ……….???
-	For NEW USER (bitfumes ) create .ssh folder, create authorized_keys and paste id_server.pub key frol LOCAL TERMINAL
-	mkdir .ssh
-	cd .ssh
-	vim authorized_keys
+		sudo su bitfumes 
+		(root@test:/home/gedamin#)
+		so go to gedamin directory ……….???
+		For NEW USER (bitfumes ) create .ssh folder, create authorized_keys and paste id_server.pub key frol LOCAL TERMINAL
+		mkdir .ssh
+		cd .ssh
+		vim authorized_keys
 
 	**********************************
 	5.	COPY id_server.pub key from LOCAL TERMINAL
-	cd ~/.ssh
-	cat id_server.pub | pbcopy
+		cd ~/.ssh
+		cat id_server.pub | pbcopy
 				#will copy in clipboard
 	**********************************
 	6.	GO back Server terminal and PASTE it with ssh
@@ -69,7 +72,7 @@ II. LOGIN via SSH (form you pc to DigitalOcian)
 			ssh -i ~/.ssh/id_server bitfumes@server_IP
 	**********************************
 	8.	RESTRICT login as root USER (login as bitfumes  ssh -i ~/.ssh/id_server bitfumes@server_IP)
-			5.1. In server file (/etc/ssh/sshd_config) make changes
+			#In server file (/etc/ssh/sshd_config) make changes
 			sudo vim /etc/ssh/sshd_config
 			make two things as 'No' .
 			- press i to INSERT
@@ -102,25 +105,32 @@ III. INSTAL LEMP
 	**********************************
 	3.	INSTAL PHP - https://gist.github.com/santoshachari/87bf77baeb45a65eb83b553aceb135a3
 
-	sudo apt-get install php7.2-cli php7.2-fpm php7.2-mbstring php7.2-mysql php7.1-mcrypt php7.2-curl 
+		sudo apt-get install php7.2-cli php7.2-fpm php7.2-mbstring php7.2-mysql php7.1-mcrypt php7.2-curl 
+
+		#Configure PHP
+		sudo vim /etc/php/7.2/fpm/php.ini
+			#RENAME TO:
+			cgi.fix_pathinfo=0
+
+
 	**********************************
 	4.	Install MYSQL-Server
-	sudo apt-get install mysql-serve
-	AND
-	 Sudo mysql_secure_installation
-	    -Login to Mysql:
-	    mysql -u root -p
-	    SHOW DATABASES;
-			CREATE DATABASE blog;
-	    Exit
+		sudo apt-get install mysql-serve
+		AND
+		 Sudo mysql_secure_installation
+		    -Login to Mysql:
+		    mysql -u root -p
+		    SHOW DATABASES;
+				CREATE DATABASE blog;
+		    Exit
 
-	sudo apt-get install mysql-serve
+		sudo apt-get install mysql-serve
 	**********************************
 	5.	INSTAL nginix
-	sudo apt-get install nginx
+		sudo apt-get install nginx
 	6.	Install Git, zip & unzip
-	sudo apt-get install git zip unzip
-	check git: git --version
+		sudo apt-get install git zip unzip
+		check git: git --version
 	**********************************
 	7.	Install phpmyadmin (?)
 
@@ -129,48 +139,48 @@ III. INSTAL LEMP
 IV. INSTALL LARAVEL via GITHUB
 	**********************************
 	1.	Create project in PC, initiate git, move project to Github
-	composer create-project laravel/laravel
-	git init
-	git add .
-	git commit -m "My First Commit"
+		composer create-project laravel/laravel
+		git init
+		git add .
+		git commit -m "My First Commit"
 
-	git remote add origin git@github.com:{github-username}/{repository-name}.git
-	git push -u origin master ar reikia ???
+		git remote add origin git@github.com:{github-username}/{repository-name}.git
+		git push -u origin master ar reikia ???
 	**********************************
 	2.	Create SSH key for github on server
-	LOGIN s USER bitfumes: ssh -i ~/.ssh/id_server bitfumes@server_IP
+		LOGIN s USER bitfumes: ssh -i ~/.ssh/id_server bitfumes@server_IP
 
-	ssh-keygen -t rsa -b 4096 -C "github"
-	ENTER, ENTER (the same file this time) 
-	 cat ~/.ssh/id_rsa.pub
-	  -we will see key, which we have to --->COPY KEY<---
+		ssh-keygen -t rsa -b 4096 -C "github"
+		ENTER, ENTER (the same file this time) 
+		 cat ~/.ssh/id_rsa.pub
+		  -we will see key, which we have to --->COPY KEY<---
 	  **********************************
 	3.	Register ssh public key on github (PASTE KEY)
-	Login to github
-	Create repository
-	Upload to git (if not uploaded)
-	Go to settings, deploy keys and paste key
-	ssh –T git@github.com  check if ok ssh
+		Login to github
+		Create repository
+		Upload to git (if not uploaded)
+		Go to settings, deploy keys and paste key
+		ssh –T git@github.com  check if ok ssh
 	**********************************
 	4.	Using GIT - Get project on our server
-	Ensure that project is in /var/www/html;
-	Go to /var/www and execute:
-	git clone git@github.com:{github-username}/{repository-name}.git html
-	git clone git@github.com:Cyber-gedamin/{repository-name}.git html
+		Ensure that project is in /var/www/html;
+		Go to /var/www and execute:
+		git clone git@github.com:{github-username}/{repository-name}.git html
+		git clone git@github.com:Cyber-gedamin/{repository-name}.git html
 
 	**********************************
 	5.	Install Composer on our server
-	# Firstly go to html directory
-	cd html
-	# Install Composer
-	curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-	# check composer install 
-	composer -v
-	:~/html $ composer install --no-dev
+		# Firstly go to html directory
+		cd html
+		# Install Composer
+		curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+		# check composer install 
+		composer -v
+		:~/html $ composer install --no-dev
 
 	change .env.example file of laravel to .env file only
-	cp .env.example .env
-	php artisan key:generate
+		cp .env.example .env
+		php artisan key:generate
 
 
 **********************************
@@ -178,53 +188,55 @@ IV. INSTALL LARAVEL via GITHUB
 V. Edit nginx AND Deploy Laravel to DigitalOcian
 	1. Edit nginx for laravel IOT designate the right FOLDER fot index.php, additional uncomenent and edit for php7.2
 
-	# Go to nginx folder
-	cd /etc/nginx
-	# Open default site configuration
-	sudo vim sites-available/default
+		# Go to nginx folder
+		cd /etc/nginx
+		# Open default site configuration
+		sudo vim sites-available/default
 
-	# change from
-	root /var/www/html;
-	# to
-	root /var/www/html/public;
+		# change from
+		root /var/www/html;
+		# to
+		root /var/www/html/public;
 
-	#Add server IP
-			server_name 107.191.44.91;
-
-
-	# ADD index.php after index.html
-	Index.php
-
-	# EDDIT loaction / {
-
-	location / {
-	        try_files $uri $uri/ /index.php$is_args$args;
-		#OR
-			#try_files $uri $uri/ /index.php?$query_string;
-
-	    }
+		#Add server IP
+				server_name 107.191.44.91;
 
 
-	location ~ \.php$ {
-	                include snippets/fastcgi-php.conf;
-	                fastcgi_pass unix:/run/php/php7.2-fpm.sock;
-	        }
+		# ADD index.php after index.html
+		Index.php
 
-	ESC
-	:wq
-	ENSURE that project in /var/www/html;
+		# EDDIT loaction / {
 
-	:~$ sudo service nginx restart
-	:~$ sudo service nginx reload
-	Check if nginx work properly
-	:~$ sudo nginx –t
+		location / {
+		        try_files $uri $uri/ /index.php$is_args$args;
+			#OR
+				#try_files $uri $uri/ /index.php?$query_string;
 
-	# Open default site configuration
-	sudo vim /etc/nginx/sites-available/default
+		    }
 
-	:~$ sudo service nginx restart
 
-	:/var/www/html$ sudo chmod -R 777 storage
+		location ~ \.php$ {
+		                include snippets/fastcgi-php.conf;
+		                fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+		        }
+
+		ESC
+		:wq
+		ENSURE that project in /var/www/html;
+
+		:~$ sudo service nginx restart
+		:~$ sudo service nginx reload
+		Check if nginx work properly
+		:~$ sudo nginx –t
+
+		# Open default site configuration
+		sudo vim /etc/nginx/sites-available/default
+
+		:~$ sudo service nginx restart
+
+
+
+		:/var/www/html$ sudo chmod -R 777 storage
 
 
 	2. make sure that project is in right folder

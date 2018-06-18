@@ -1,6 +1,9 @@
 devmarketer
 https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/
 
+bitfumes:
+https://bitfumes.com/blog/server/allow-login-with-ssh-key-only
+
 YOUTUBE devmarketer:
 https://www.youtube.com/channel/UC6kwT7-jjZHHF1s7vCfg2CA/playlists
 
