@@ -1,44 +1,48 @@
 #SOME GIT COMANDS:
-git init
-git add .
-git commit -m "my first commit"
-git remote add origin https://github.com/Cyber-gedamin/git.git
-git push -u origin master
+		git init
+		git add .
+		git commit -m "my first commit"
+		git remote add origin https://github.com/Cyber-gedamin/git.git
+		git push -u origin master
 
-git push #next time
+		git push #next time
 
-git clone https://github.com/Cyber-gedamin/git.git
+		git clone https://github.com/Cyber-gedamin/git.git
 
-#Update the remote-tracking branches:
-git fetch origin
-git pull #RUNS two commands git fetch and merge
-
-git branch
-git status
-git log
-git diff
-# DELETE file (and do not forget commit after delete
-git mv # move
-git mv filename.txt var/www/html
-#Move and rename
-git mv filename.txt var/www/html/filename-1.html
-git rm filename.html
+	#Update the remote-tracking branches:
+		git fetch origin
+		git pull #RUNS two commands git fetch and merge
 
 
 
-***********************
-SSH
-***********************
-ssh-keygen -t rsa -b 4096 -C "identifyer" # - creat ssh public and private keys
-	#Tell SHH agen which one to use from your PC .ssh 
-	eval "$(ssh-agent -s)"
-	ssh-add ~/.ssh/id_rsa
-	# Copy in cliboard ssh key from your PC
-	Cat ir_rsa.pub | pbcopy #OR# pbcopy < ~/.ssh/id_rsa.pub
+		git branch
+		git status
+		git log
+		git diff
+	# DELETE file (and do not forget commit after delete
+		git mv # move
+		git mv filename.txt var/www/html
+	#Move and rename
+		git mv filename.txt var/www/html/filename-1.html
+		git rm filename.html
 
 
 
+	***********************
+	SSH
+	***********************
+		ssh-keygen -t rsa -b 4096 -C "identifyer" # - creat ssh public and private keys
+			#Tell SHH agen which one to use from your PC .ssh 
+				eveal "$(ssh-agent -s)"
+				ssh-add ~/.ssh/id_rsa
+			# Copy in cliboard ssh key from your PC
+				Cat id_rsa.pub | pbcopy #OR# pbcopy < ~/.ssh/id_rsa.pub
 
-************************
-ctr+K - clear terminal
-cmd+k - clear terminal in MAC
+
+		#Create a repo. Make sure there is at least one file in it (even just the README) Generate ssh key:
+			sshsh-keygen -t rsa -C "your_email@example.com"
+
+
+		************************
+			ctr+K - clear terminal
+			cmd+k - clear terminal in MAC
