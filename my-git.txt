@@ -29,7 +29,7 @@ git rm filename.html
 ***********************
 SSH
 ***********************
-ssh -keygen -t rsa -b 4096 -C "identifyer" - creat ssh public and private keys
+ssh-keygen -t rsa -b 4096 -C "identifyer" # - creat ssh public and private keys
 	#Tell SHH agen which one to use from your PC .ssh 
 	eval "$(ssh-agent -s)"
 	ssh-add ~/.ssh/id_rsa
