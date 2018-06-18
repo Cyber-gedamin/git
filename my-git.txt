@@ -4,7 +4,9 @@
 		git commit -m "my first commit"
 		git remote add origin https://github.com/Cyber-gedamin/git.git
 		git push -u origin master
-		
+
+		ĘFirst time from HOME PC
+		git push -u origin master https://github.com/Cyber-gedamin/git.git
 
 		git push #next time
 
