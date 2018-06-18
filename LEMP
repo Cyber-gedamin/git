@@ -1,0 +1,175 @@
+LEMP
+https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/
+
+Droplet
+SSH
+
+Step 2: Log-In via SSH
+	ssh root@100.100.100.100 
+
+Step 3: Update Package Installer
+	sudo apt-get update
+
+Step 4: Install Nginx
+	sudo apt-get install nginx
+
+Step 5: Install MySQL
+	sudo apt-get install mysql-server
+	#Secure your Install
+		sudo mysql_secure_installation
+
+Step 6: Install PHP
+	sudo apt-get install php-fpm php-mysql php-mbstring
+
+Step 7: Configure PH
+	sudo nano /etc/php/7.0/fpm/php.ini
+	#OR
+	sudo vim /etc/php/7.0/fpm/php.ini
+	# uncoment and rename into: cgi.fix_pathinfo=0
+
+	sudo systemctl restart php7.0-fpm
+
+Step 7: Configure Nginx
+	sudo nano /etc/nginx/sites-available/default
+
+		EDIT (add index.php):
+				server {
+				    listen 80 default_server;
+				    listen [::]:80 default_server;
+				    
+				    root /var/www/html;
+				    index index.php index.html index.htm index.nginx-debian.html;
+
+				    server_name _;
+
+				    location / {
+				        try_files $uri $uri/ =404;
+				    }
+				}
+
+		EDIT (add server IP or domain): 
+				server {
+				    listen 80 default_server;
+				    listen [::]:80 default_server;
+				    
+				    root /var/www/html;
+				    index index.php index.html index.htm index.nginx-debian.html;
+
+				    server_name 107.191.44.91;
+
+				    location / {
+				        try_files $uri $uri/ =404;
+				    }
+				}
+		EDIT: (location ~ \.php$ { ...; AND location ~ /\.ht { - fot htacces, becays nginx not using it)
+				server {
+					    listen 80 default_server;
+					    listen [::]:80 default_server;
+
+					    root /var/www/html;
+					    index index.php index.html index.htm index.nginx-debian.html;
+
+					    server_name 107.191.44.91;
+
+					    location / {
+					        try_files $uri $uri/ =404;
+					    }
+
+					    location ~ \.php$ {
+					        include snippets/fastcgi-php.conf;
+					        fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+					    }
+
+					    location ~ /\.ht {
+					        deny all;
+					    }
+					}
+
+			#check for nginx errors
+				sudo nginx -t
+
+			#reload:
+				sudo systemctl reload nginx
+
+Step 8: Create A Folder for Laravel
+	sudo mkdir -p /var/www/laravel
+	sudo nano /etc/nginx/sites-available/default
+		EDIT into (instad html to public): 
+			root /var/www/laravel/public;
+		EDIT (fro 404):
+		location / {
+                try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        #RESTART
+       		sudo service nginx restart
+
+Step 9: Create Swap File (Optional)
+	sudo fallocate -l 1G /swapfile
+	sudo mkswap /swapfile
+	sudo swapon /swapfile
+
+
+Step 10: Install Composer
+	cd ~
+	curl -sS https://getcomposer.org/installer | php
+
+	#Now we have composer.phar in our home folder, and it’s time to move it into our bin so we can use composer commands easier by just typing composer:	
+		sudo mv composer.phar /usr/local/bin/composer
+
+
+Step 11: Install Git
+	cd /var
+	mkdir repo && cd repo
+
+	mkdir site.git && cd site.git
+	git init --bare
+		# We now have a git repository in /var/repo/site.git
+
+Step 12: Setting Up Git Hooks
+	sudo nano post-receive
+		#INSERT IN FILE
+			#!/bin/sh
+			git --work-tree=/var/www/laravel --git-dir=/var/repo/site.git checkout -f
+
+		sudo chmod +x post-receive
+		exit
+
+Step 12: Set up our Local Computer to Push to Production
+	cd Sites/blog
+	git remote add production ssh://root@example.com/var/repo/site.git
+	git push production master
+
+Step 13: Verify our Git Hook Works
+	ssh root@example.com
+	cd /var/www/laravel
+	ls
+
+Step 14: Run Composer
+	composer install --no-dev
+
+Step 15: Laravel Permissions
+	sudo chown -R :www-data /var/www/laravel
+	sudo chmod -R 775 /var/www/laravel/storage
+
+Step 16: Database Setup
+	mysql -u root -p'yourpassword'
+	SHOW DATABASES;
+	CREATE DATABASE blog;
+	SHOW DATABASES;
+	exit
+
+Step 17: Configuring Laravel
+	cp .env.example .env
+	nano .env
+
+	php artisan key:generate
+
+	In config/app.php
+		 'url' => 'http://example.com',
+
+	php artisan config:cache
+
+	
+
+
