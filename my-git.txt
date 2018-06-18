@@ -44,5 +44,6 @@
 
 
 		************************
+			cd .. # - up folder
 			ctr+K - clear terminal
 			cmd+k - clear terminal in MAC
