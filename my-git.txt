@@ -1,3 +1,4 @@
+#SOME GIT COMANDS:
 git init
 git add .
 git commit -m "my first commit"
