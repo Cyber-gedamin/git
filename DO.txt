@@ -1,6 +1,7 @@
 https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/
 https://bitfumes.com/blog/server/logging-into-digital-ocean-droplet-ssh
 
+
 **********************************
 **********************************
 I. CREATE DROPLET in DigitalOcian
