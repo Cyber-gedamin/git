@@ -10,6 +10,9 @@ IV. LOGIN USER VIA SSH
 	@ADD darbo PCC SSH
 	@ADD Mac book Pro SSH
 
+
+----------Darbe poadariau iki cia ------------
+
 V. INSTALL LEMP (php 7.2)
 
 CONFIGURE NGINX and PHP (for laravel)
