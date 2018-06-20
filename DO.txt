@@ -55,8 +55,12 @@ II. LOGIN via SSH (form you pc to DigitalOcian)
 	**********************************
 	4.	Allow bitfumes user to login to server via ssh
 		sudo su bitfumes 
+		#IMPORTANT--> REACH vis directory home/bitfumes
+		cd /
+		cd home
+		cd bitfumes
 		(root@test:/home/gedamin#)
-		so go to gedamin directory ……….???
+		so go to bitfumes directory
 		For NEW USER (bitfumes ) create .ssh folder, create authorized_keys and paste id_server.pub key frol LOCAL TERMINAL
 		mkdir .ssh
 		cd .ssh
