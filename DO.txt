@@ -1,6 +1,8 @@
 https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/
 https://bitfumes.com/blog/server/logging-into-digital-ocean-droplet-ssh
 
+LOOKS GREAT: https://medium.com/@asked_io/how-to-install-php-7-2-x-nginx-1-10-x-laravel-5-6-f9e30ee30eff
+
 
 **********************************
 **********************************
@@ -77,7 +79,7 @@ II. LOGIN via SSH (form you pc to DigitalOcian)
 	7.	Exit from server exit, exit, exit AND login with NEW USER
 			ssh -i ~/.ssh/id_server gedamin@server_IP
 	**********************************
-	
+
 	8.	RESTRICT login as root USER (login as gedamin  ssh -i ~/.ssh/id_server gedamin@server_IP)
 			#In server file (/etc/ssh/sshd_config) make changes
 			sudo vim /etc/ssh/sshd_config
