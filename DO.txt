@@ -48,7 +48,8 @@ II. LOGIN via SSH (form you pc to DigitalOcian)
 		usermod -aG admin bitfumes
 		sudo su bitfumes 
 		sudo su root – now you should able to run sudo commands
-		cd home
+		cd ~
+		cd usr/home
 		cd gedamin
 
 	**********************************
