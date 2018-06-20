@@ -40,28 +40,28 @@ II. LOGIN via SSH (form you pc to DigitalOcian)
 		Now we have to restrict login from root user
 		4.	CREATE NEW USER
 		1.	Create new user (add his password, details):
-		adduser bitfumes
+		adduser gedamin
 		2.	switch to new user
-		sudo su bitfumes  - But this user does't have any admin privilege, can’t run any sudo commands SO it will not be possible
+		sudo su gedamin  - But this user does't have any admin privilege, can’t run any sudo commands SO it will not be possible
 		3.	Switch BACK to root user
 		Exit 
-		usermod -aG admin bitfumes
-		sudo su bitfumes 
+		usermod -aG admin gedamin
+		sudo su gedamin 
 		sudo su root – now you should able to run sudo commands
 		cd ~
 		cd usr/home
 		cd gedamin
 
 	**********************************
-	4.	Allow bitfumes user to login to server via ssh
-		sudo su bitfumes 
-		#IMPORTANT--> REACH vis directory home/bitfumes
+	4.	Allow gedamin user to login to server via ssh
+		sudo su gedamin 
+		#IMPORTANT--> REACH vis directory home/gedamin
 		cd /
 		cd home
-		cd bitfumes
+		cd gedamin
 		(root@test:/home/gedamin#)
-		so go to bitfumes directory
-		For NEW USER (bitfumes ) create .ssh folder, create authorized_keys and paste id_server.pub key frol LOCAL TERMINAL
+		so go to gedamin directory
+		For NEW USER (gedamin ) create .ssh folder, create authorized_keys and paste id_server.pub key frol LOCAL TERMINAL
 		mkdir .ssh
 		cd .ssh
 		vim authorized_keys
@@ -75,9 +75,10 @@ II. LOGIN via SSH (form you pc to DigitalOcian)
 	6.	GO back Server terminal and PASTE it with ssh
 	**********************************
 	7.	Exit from server exit, exit, exit AND login with NEW USER
-			ssh -i ~/.ssh/id_server bitfumes@server_IP
+			ssh -i ~/.ssh/id_server gedamin@server_IP
 	**********************************
-	8.	RESTRICT login as root USER (login as bitfumes  ssh -i ~/.ssh/id_server bitfumes@server_IP)
+	
+	8.	RESTRICT login as root USER (login as gedamin  ssh -i ~/.ssh/id_server gedamin@server_IP)
 			#In server file (/etc/ssh/sshd_config) make changes
 			sudo vim /etc/ssh/sshd_config
 			make two things as 'No' .
@@ -88,16 +89,16 @@ II. LOGIN via SSH (form you pc to DigitalOcian)
 			sudo service ssh restart
 		exit, exit from server till MAC
 
-	SO NOW if you try to login via root user, you can't. This means the only way to reach your server is via ssh with bitfumes user.
-	ssh -i ~/.ssh/id_server bitfumes@server_IP –able to login as user
+	SO NOW if you try to login via root user, you can't. This means the only way to reach your server is via ssh with gedamin user.
+	ssh -i ~/.ssh/id_server gedamin@server_IP –able to login as user
 	ssh -i ~/.ssh/id_server root@server_IP – not able to login
 
 **********************************
 **********************************
 III. INSTAL LEMP
 	**********************************
-	1.	Login to SERVER as USER (bitfumes) via ssh
-	ssh -i ~/.ssh/id_server bitfumes@server_IP
+	1.	Login to SERVER as USER (gedamin) via ssh
+	ssh -i ~/.ssh/id_server gedamin@server_IP
 	**********************************
 	2.	Install repositories (IOT get php7.2)
 	sudo apt-get update
@@ -154,7 +155,7 @@ IV. INSTALL LARAVEL via GITHUB
 		git push -u origin master ar reikia ???
 	**********************************
 	2.	Create SSH key for github on server
-		LOGIN s USER bitfumes: ssh -i ~/.ssh/id_server bitfumes@server_IP
+		LOGIN s USER gedamin: ssh -i ~/.ssh/id_server gedamin@server_IP
 
 		ssh-keygen -t rsa -b 4096 -C "github"
 		ENTER, ENTER (the same file this time) 
