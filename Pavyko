@@ -1,6 +1,8 @@
 Pagrindinis reference: https://medium.com/@asked_io/how-to-install-php-7-2-x-nginx-1-10-x-laravel-5-6-f9e30ee30eff
-
---EIGA--
+OTHER - https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/
+OTHER - https://bitfumes.com/blog/server/allow-login-with-ssh-key-only
+****************************************************************************************************************
+--EIGA--> SSH login, LEMP, COMPOSER
 	sudo apt update
 	sudo apt upgrade
 
@@ -13,74 +15,72 @@ Pagrindinis reference: https://medium.com/@asked_io/how-to-install-php-7-2-x-ngi
 	apt-get install unzip zip git nginx php7.2 php7.2-mysql php7.2-fpm php7.2-mbstring php7.2-xml php7.2-curl
 	sudo apt install php7.1-gd  php7.1-mcrypt php7.1-iconv
 
-
 	sudo apt install mysql-server
 	mysql_secure_installation
 
 	sudo apt install nginx 
 	sudo vim /etc/nginx/sites-available/default
-	 
-
-
 	--edtit nginx--
-				server {
-				listen 80 default_server;
-				listen [::]:80 default_server;
+						server {
+						listen 80 default_server;
+						listen [::]:80 default_server;
 
-				root /var/www/html/public;
+						root /var/www/html/public;
 
-				index index.php index.html index.htm;
+						index index.php index.html index.htm;
 
-				add_header X-Frame-Options "SAMEORIGIN";
-			    add_header X-XSS-Protection "1; mode=block";
-			    add_header X-Content-Type-Options "nosniff";
+						add_header X-Frame-Options "SAMEORIGIN";
+					    add_header X-XSS-Protection "1; mode=block";
+					    add_header X-Content-Type-Options "nosniff";
 
-				server_name 178.62.51.98;
-				charset   utf-8;
-				gzip on;
-			    gzip_vary on;
-			    gzip_disable "msie6";
-			    gzip_comp_level 6;
-			    gzip_min_length 1100;
-			    gzip_buffers 16 8k;
-			    gzip_proxied any;
-			    gzip_types
-			        text/plain
-			        text/css
-			        text/js
-			        text/xml
-			        text/javascript
-			        application/javascript
-			        application/x-javascript
-			        application/json
-			        application/xml
-			        application/xml+rss;
+						server_name 178.62.51.98;
+						charset   utf-8;
+						gzip on;
+					    gzip_vary on;
+					    gzip_disable "msie6";
+					    gzip_comp_level 6;
+					    gzip_min_length 1100;
+					    gzip_buffers 16 8k;
+					    gzip_proxied any;
+					    gzip_types
+					        text/plain
+					        text/css
+					        text/js
+					        text/xml
+					        text/javascript
+					        application/javascript
+					        application/x-javascript
+					        application/json
+					        application/xml
+					        application/xml+rss;
 
-				location / {
+						location / {
 
-					try_files $uri $uri/ /index.php?$query_string;
+							try_files $uri $uri/ /index.php?$query_string;
+						}
+						location = /favicon.ico { access_log off; log_not_found off; }
+					    location = /robots.txt  { access_log off; log_not_found off; }
+
+						location ~ \.php$ {
+							fastcgi_split_path_info ^(.+\.php)(/.+)$;
+							include snippets/fastcgi-php.conf;
+							fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+					        include fastcgi_params;
+						}
+
+						location ~ /\.ht {
+							deny all;
+						}
 				}
-				location = /favicon.ico { access_log off; log_not_found off; }
-			    location = /robots.txt  { access_log off; log_not_found off; }
 
-				location ~ \.php$ {
-					fastcgi_split_path_info ^(.+\.php)(/.+)$;
-					include snippets/fastcgi-php.conf;
-					fastcgi_pass unix:/run/php/php7.2-fpm.sock;
-			        include fastcgi_params;
-				}
-
-				location ~ /\.ht {
-					deny all;
-				}
-		}
-
+-EDIT PHP (nezinau kodel-----????):
+	etc/php/7.2/fpm/php.ini
+		FROM: ;cgi.fix_pathinfo=1
+		TO: cgi.fix_pathinfo=0
 
 
 apt-get -y install mysql-client mysql-server
 mysql_secure_installation
-
-
 	mysql -u root -p
 		    SHOW DATABASES;
 			CREATE DATABASE blog;
@@ -96,37 +96,59 @@ mv .env.example .env
 php artisan key:generate
 	#edit .env in order to lounch and connect to DB
 
-
 chown -R www-data:www-data /var/www/html
 chmod -R 775 /var/www/html/storage
 
 
 php artisan migrate
+php artisane make:auth
 php artisan storage:link
 php artisan config:cache
 php artisan route:cache
 
-9.Pakeitimu atnujinimas
-php artisan down
-php artisan route:clear
-php artisanconfig:clear
-pap artisan cach:clear
-git pull origin master
-composer install --optimize-autoloader
-php artisan migrate
-php artisan config:cache
-php artisan route:cache
-php artisan up
 
 ********************************************************************
+9.Pakeitimu atnujinimas
+	php artisan down
+	php artisan route:clear
+	php artisanconfig:clear
+	pap artisan cach:clear
+	git pull origin master
+	composer install --optimize-autoloader
+	php artisan migrate
+	php artisan config:cache
+	php artisan route:cache
+	php artisan up
+*******************************************************************
+-----ADITIONAL
+*******************************************************************
+
+***1*** ADD user
+			adduser gedamin
+			usermod -aG admin gedamin
+			cd ~
+			cd usr/home
+			cd gedamin
+			mkdir .ssh
+			cd .ssh
+			vim authorized_keys
+				#paste ssh key
+			:wq
+***2*** RESTRICT login as root USER (login as gedamin  ssh -i ~/.ssh/id_server gedamin@server_IP)
+			#In server file (/etc/ssh/sshd_config) make changes
+			sudo vim /etc/ssh/sshd_config
+			make two things as 'No' .
+			- press i to INSERT
+			PermintRootlogin no
+			PasswordAuthentication no
+			:wq
+			sudo service ssh restart
+			#SO NOW if you try to login via root user, you can't. This means the only way to reach your server is via ssh with gedamin user.
+***3*** CONNECT SERVER to GIT via SSH key
+
 
 https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/
+Step 9: Create Swap File 
 	sudo fallocate -l 1G /swapfile
 	sudo mkswap /swapfile
 	sudo swapon /swapfile
-
-
---COMPOSER
-cd ~
-curl -sS https://getcomposer.org/installer | php
-sudo mv composer.phar /usr/local/bin/composer
