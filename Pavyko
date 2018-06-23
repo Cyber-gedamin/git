@@ -18,7 +18,7 @@ OTHER - https://bitfumes.com/blog/server/allow-login-with-ssh-key-only
 	sudo apt install mysql-server
 	mysql_secure_installation
 
-	sudo apt install nginx 
+	# nereikia jau įdiegtas: sudo apt install nginx 
 	sudo vim /etc/nginx/sites-available/default
 	--edtit nginx--
 						server {
