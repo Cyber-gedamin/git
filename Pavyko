@@ -72,6 +72,8 @@ OTHER - https://bitfumes.com/blog/server/allow-login-with-ssh-key-only
 							deny all;
 						}
 				}
+#RESTART
+/etc/init.d/nginx restart
 
 -EDIT PHP (nezinau kodel-----????):
 	etc/php/7.2/fpm/php.ini
@@ -92,6 +94,7 @@ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/loca
 cd /var/www/html
 rm -f index.nginx-debian.html 
 composer create-project laravel/laravel .
+--OR from GIT-- git clone https://github.com/Cyber-gedamin/laravel-pro1.git .
 mv .env.example .env
 php artisan key:generate
 	#edit .env in order to lounch and connect to DB
@@ -101,18 +104,21 @@ chmod -R 775 /var/www/html/storage
 
 
 php artisan migrate
-php artisane make:auth
+php artisan make:auth
 php artisan storage:link
 php artisan config:cache
 php artisan route:cache
 
+?????????????????????????????????????????????????
+HOW to instal phpMyadmin
+??????????????????????????????????????????
 
 ********************************************************************
 9.Pakeitimu atnujinimas
 	php artisan down
 	php artisan route:clear
 	php artisanconfig:clear
-	pap artisan cach:clear
+	php artisan cach:clear
 	git pull origin master
 	composer install --optimize-autoloader
 	php artisan migrate
