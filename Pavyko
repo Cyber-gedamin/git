@@ -1,3 +1,43 @@
+I.
+https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04
+	ssh -i ~/.ssh/id_macServer root@178.128.47.137
+	adduser gedamin
+
+II.
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04
+	--ADITIONAL:
+	apt-get install unzip zip git fpm mbstring xml curl gd mcrypt
+
+III.
+https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-16-04
+	--ADITIONAL IMPORTANT to reach phpmyadmin:
+	sudo ln -s /usr/share/phpmyadmin
+
+IV. NGINX
+https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04
+
+
+		stop apache2
+			sudo systemctl stop apache2.service
+		prevent apache2 to start at boot
+			sudo systemctl disable apache2.service
+		Reinstall nginx
+			sudo apt-get install nginx
+
+
+sudo systemctl stop nginx
+sudo systemctl start nginx
+sudo systemctl stop apache2
+sudo systemctl start apache2
+
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-with-nginx-on-ubuntu-16-04
+
+
+SUMMARy: cant run apache and nginx at the same time, so phpmyadmin available when nginx is stoped.
+
+
+
 Pagrindinis reference: https://medium.com/@asked_io/how-to-install-php-7-2-x-nginx-1-10-x-laravel-5-6-f9e30ee30eff
 OTHER - https://devmarketer.io/learn/deploy-laravel-5-app-lemp-stack-ubuntu-nginx/
 OTHER - https://bitfumes.com/blog/server/allow-login-with-ssh-key-only
@@ -75,6 +115,9 @@ OTHER - https://bitfumes.com/blog/server/allow-login-with-ssh-key-only
 #RESTART
 /etc/init.d/nginx restart
 
+
+
+
 -EDIT PHP (nezinau kodel-----????):
 	etc/php/7.2/fpm/php.ini
 		FROM: ;cgi.fix_pathinfo=1
@@ -102,6 +145,8 @@ php artisan key:generate
 chown -R www-data:www-data /var/www/html
 chmod -R 775 /var/www/html/storage
 
+chmod -R 777 /var/www/html/storage/logs/laravel.log
+
 
 php artisan migrate
 php artisan make:auth
@@ -117,7 +162,7 @@ HOW to instal phpMyadmin
 9.Pakeitimu atnujinimas
 	php artisan down
 	php artisan route:clear
-	php artisanconfig:clear
+	php artisan config:clear
 	php artisan cach:clear
 	git pull origin master
 	composer install --optimize-autoloader
