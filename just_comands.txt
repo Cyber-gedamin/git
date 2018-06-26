@@ -10,9 +10,13 @@ cd ~
 cd usr/home
 cd gedamin
 mkdir .ssh
+
 chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys
 touch text.txt
+
+sudo vim /etc/ssh/sshd_config
+sudo service ssh restart
 
 sudo ufw app list
 sudo ufw allow OpenSSH
