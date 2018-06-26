@@ -11,10 +11,6 @@ cd usr/home
 cd gedamin
 mkdir .ssh
 
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/authorized_keys
-touch text.txt
-
 sudo vim /etc/ssh/sshd_config
 sudo service ssh restart
 
@@ -99,4 +95,8 @@ php artisan down
 sudo fallocate -l 1G /swapfile
 	sudo mkswap /swapfile
 	sudo swapon /swapfile
+
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+touch text.txt
 
